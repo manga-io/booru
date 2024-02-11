@@ -254,7 +254,7 @@
 				$tmp_limit = $pages;
 			if($pages > $page_limit)
 				$lowerlimit = $pages - $page_limit;
-			if($start > $lowerlimit)
+			if(isset($lowerlimit) && $start > $lowerlimit)
 				$start = $lowerlimit;
 			$lastpage = $limit*($pages - 1);
 			if($page != 0 && !((($page+$limit) / $limit) > $pages)) 

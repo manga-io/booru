@@ -47,7 +47,7 @@
 			$query = "SELECT tag FROM $alias_table WHERE alias='$tag' AND status='accepted'";
 			$result = $db->query($query);
 			$row = $result->fetch_assoc();
-			if($row['tag'] != "" && $row['tag'] != NULL)
+			if(isset($row['tag']) && $row['tag'] != "" && $row['tag'] != NULL)
 				return $row['tag'];
 			return false;
 		}

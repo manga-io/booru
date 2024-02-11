@@ -6,7 +6,7 @@
 	{
 		$type = $db->real_escape_string($_GET['type']);
 		$id = $db->real_escape_string($_GET['id']);
-		$pid = $db->real_escape_string($_GET['pid']);
+		if (isset($_GET['pid'])) $pid = $db->real_escape_string($_GET['pid']);
 		if($type == "note")
 		{
 			header("Cache-Control: store, cache");

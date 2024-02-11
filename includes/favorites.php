@@ -26,7 +26,7 @@
 		$query = "SELECT fcount FROM $favorites_count_table WHERE user_id='$id'";
 		$result = $db->query($query);
 		$row = $result->fetch_assoc();
-		$numrows = $row['fcount'];
+		$numrows = isset($row['fcount']) ? $row['fcount'] : 0;
 		$result->free_result();
 		if($numrows < 1)
 			die("<h1>You have no favorites.</h1>");

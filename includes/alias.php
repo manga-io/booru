@@ -56,5 +56,14 @@
 	</form>
 	<div id="paginator">';
 	$misc = new misc();
-	print $misc->pagination($_GET['page'],$sub,$id,$limit,$page_limit,$numrows,$_GET['pid'],$tags);
+	print $misc->pagination(
+		$_GET['page'],
+		isset($sub) ? $sub : false,
+		isset($id) ? $id : false,
+		$limit,
+		$page_limit,
+		$numrows,
+		$page,
+		isset($tags) ? $tags : false
+	);
 ?></div></body></html>

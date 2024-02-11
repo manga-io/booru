@@ -16,7 +16,7 @@
 	if($user->check_log())
 	{
 		$uname = $checked_username;
-		$uid = checked_user_id;
+		$uid = $checked_user_id;
 	}
 	$query = "SELECT COUNT(*) FROM $forum_post_table WHERE topic_id='$id'";
 	$result = $db->query($query);
@@ -55,7 +55,16 @@
 	}
 	echo '<div class="paginator"><div id="paginator">';
 	$misc = new misc();
-	print $misc->pagination($_GET['page'],$_GET['s'],$row['id'],$limit,$page_limit,$numrows,$_GET['pid'],$_GET['tags']);
+	print $misc->pagination(
+		$_GET['page'],
+		$_GET['s'],
+		isset($row['id']) ? $row['id'] : false,
+		$limit,
+		$page_limit,
+		$numrows,
+		$page,
+		isset($_GET['tags']) ? $_GET['tags'] : false
+	);
 	echo '</div><center><br /><br />';
 	$query = "SELECT locked FROM $forum_topic_table WHERE id='$id' LIMIT 1";
 	$result = $db->query($query) or die(mysql_error());

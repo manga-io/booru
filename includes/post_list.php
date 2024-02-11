@@ -120,9 +120,9 @@ var posts = {}; var pignored = {};
 			if($no_cache === true || $tag_count > 1 || strpos(strtolower($new_tag_cache),"user:") !== false || strpos(strtolower($new_tag_cache),"rating:") !== false || substr($new_tag_cache,0,1) == "-" || strpos(strtolower($new_tag_cache),"*") !== false || strpos(strtolower($new_tag_cache),"parent:") !== false)
 				$query = $query." LIMIT $page, $limit";			
 		}
-		if(!isset($_GET['tags']) || $no_cache === true || $tag_count > 1 || strtolower($_GET['tags']) == "all" || strpos(strtolower($new_tag_cache),"user:") !== false || strpos(strtolower($new_tag_cache),"rating:") !== false || substr($new_tag_cache,0,1) == "-" || strpos(strtolower($new_tag_cache),"*") !== false || strpos(strtolower($new_tag_cache),"parent:") !== false)
+		if(!isset($_GET['tags']) || ! isset($no_cache) || $no_cache === true || $tag_count > 1 || strtolower($_GET['tags']) == "all" || strpos(strtolower($new_tag_cache),"user:") !== false || strpos(strtolower($new_tag_cache),"rating:") !== false || substr($new_tag_cache,0,1) == "-" || strpos(strtolower($new_tag_cache),"*") !== false || strpos(strtolower($new_tag_cache),"parent:") !== false)
 		{
-			if($no_cache === true)
+			if(! isset($no_cache) || $no_cache === true)
 				ob_start();
 						
 			$gtags = array();
@@ -185,11 +185,19 @@ var posts = {}; var pignored = {};
 
 			//Pagination function. This should work for the whole site... Maybe.
 			$misc = new misc();
-			print $misc->pagination($_GET['page'],$_GET['s'],$id,$limit,$page_limit,$numrows,$_GET['pid'],$_GET['tags']);
-			
+			print $misc->pagination(
+				$_GET['page'],
+				$_GET['s'],
+				isset($id) ? $id : false,
+				$limit,
+				$page_limit,
+				$numrows,
+				isset($_GET['pid']) ? $_GET['pid'] : false,
+				$_GET['tags']
+			);
 		}
 		//Cache doesn't exist for search, make one.
-		if($no_cache === true)
+		if(! isset($no_cache) || $no_cache === true)
 		{
 			$data = ob_get_contents();
 			ob_end_clean();
@@ -197,7 +205,7 @@ var posts = {}; var pignored = {};
 				$page = ($_GET['pid']/$limit)+1;
 			else
 				$page = 0;
-			if($new_tag_cache != "")
+			if($main_cache_dir != null && isset($new_tag_cache) && $new_tag_cache != "")
 			{
 				if(!is_dir("$main_cache_dir".""."search_cache/".$new_tag_cache))
 					@mkdir("$main_cache_dir".""."search_cache/".$new_tag_cache);

@@ -87,8 +87,16 @@
 		echo 'Note.updateNoteCount();
 		Note.show();
 		//]]></script>';
-		echo '<a href="#" onclick="if(confirm(\'Are you sure you want to delete this post?\')){var f = document.createElement(\'form\'); f.style.display = \'none\'; this.parentNode.appendChild(f); f.method = \'POST\'; f.action = \'./public/remove.php?id='.$id.'&amp;removepost=1\'; f.submit();}; return false;">Remove</a> | <a href="#" onclick="Note.create('.$id.'); return false;">Add note</a> | <a href="#" onclick="addFav(\''.$id.'\'); return false;">Keep</a> | <a href="#" onclick="showHide(\'edit_form\'); return false;">Edit</a> | <a href="#" onclick="document.location=\'index.php?page=history&amp;type=page_notes&amp;id='.$id.'\'; return false;">Note history</a> | <a href="index.php?page=history&amp;type=tag_history&amp;id='.$id.'">Tag History</a>'; ?> <?php $prev_next['0'] != "" ? print ' | <a href="index.php?page=post&amp;s=view&amp;id='.$prev_next['0'].'">Previous</a>' : print ""; $prev_next['1'] != "" ? print ' | <a href="index.php?page=post&amp;s=view&amp;id='.$prev_next['1'].'">Next</a>' : print ""; $row['parent'] == 0 ? print "<br />" : print "<br /><a href=\"index.php?page=post&s=view&id=".$row['parent']."\">Parent</a> | ";
-?>
+		echo '<a href="#" onclick="if(confirm(\'Are you sure you want to delete this post?\')){var f = document.createElement(\'form\'); f.style.display = \'none\'; this.parentNode.appendChild(f); f.method = \'POST\'; f.action = \'./public/remove.php?id='.$id.'&amp;removepost=1\'; f.submit();}; return false;">Remove</a> | <a href="#" onclick="Note.create('.$id.'); return false;">Add note</a> | <a href="#" onclick="addFav(\''.$id.'\'); return false;">Keep</a> | <a href="#" onclick="showHide(\'edit_form\'); return false;">Edit</a> | <a href="#" onclick="document.location=\'index.php?page=history&amp;type=page_notes&amp;id='.$id.'\'; return false;">Note history</a> | <a href="index.php?page=history&amp;type=tag_history&amp;id='.$id.'">Tag History</a>'; ?> 
+		<?php 
+		if ($prev_next != null) {
+			$prev_next['0'] != "" ? print ' | <a href="index.php?page=post&amp;s=view&amp;id='.$prev_next['0'].'">Previous</a>' : print ""; 
+			$prev_next['1'] != "" ? print ' | <a href="index.php?page=post&amp;s=view&amp;id='.$prev_next['1'].'">Next</a>' : print ""; 
+		}
+		if (isset($row) && isset($row['parent'])) {
+			$row['parent'] == 0 ? print "<br />" : print "<br /><a href=\"index.php?page=post&s=view&id=".$row['parent']."\">Parent</a> | ";
+		}
+		?>
 		<form method="post" action="./public/edit_post.php" id="edit_form" name="edit_form" style="display:none">
 		<table><tr><td>
 		Rating<br />
@@ -96,18 +104,23 @@
 		<input type="radio" name="rating" <?php if($post_data['rating'] == "Questionable"){ print 'checked="checked"'; } ?> value="q" />Questionable
 		<input type="radio" name="rating" <?php if($post_data['rating'] == "Safe"){print 'checked="checked"'; } ?> value="s" />Safe
 		</td></tr>
-<?php
+		<?php
 		if($post_data['parent'] == "0")
 			$post_data['parent'] = "";
 		echo '<tr><td>Title<br />
 		<input type="text" name="title" id="title" value="'.$post_data['title'].'" />
 		</td></tr><tr><td>Parent<br />
 		<input type="text" name="parent" value="'.$post_data['parent'].'" />
-		</td></tr><tr><td>Next Post<br />
-		<input type="text" name="next_post" id="next_post" value="'.$prev_next['1'].'"/>
-		</td></tr><tr><td>Previous Post<br />
-		<input type="text" name="previous_post" id="previous_post" value="'.$prev_next['0'].'"/>
-		</td></tr><tr><td>Source<br />
+		</td></tr>';
+		if ($prev_next != null) {
+			echo '<tr><td>Next Post<br />
+			<input type="text" name="next_post" id="next_post" value="'.$prev_next['1'].'"/>
+			</td></tr>';
+			echo '<tr><td>Previous Post<br />
+			<input type="text" name="previous_post" id="previous_post" value="'.$prev_next['0'].'"/>
+			</td></tr>';
+		}
+		echo '<tr><td>Source<br />
 		<input type="text" name="source" size="40" id="source" value="'.$post_data['source'].'" />
 		</td></tr><tr><td>Tags<br />
 		<textarea id="tags" name="tags" cols="40" rows="5">'.$tags.'</textarea>

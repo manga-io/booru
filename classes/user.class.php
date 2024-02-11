@@ -111,7 +111,7 @@
 			if($this->check_log())
 			{
 				$ugroup = $checked_user_group;
-				$query = "SELECT $column FROM $group_table WHERE id='$ugroup'";
+				$query = "SELECT $column FROM `$group_table` WHERE id='$ugroup'";
 				$result = $db->query($query) or die($db->error);
 				$row = $result->fetch_assoc();
 				if($row[''.$column.''] == true)

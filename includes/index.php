@@ -3,7 +3,7 @@
 	<head>
 <?php
 	echo '<title>'.$site_url3.'</title>
-	<link rel="stylesheet" type="text/css" media="screen" href="'.$site_url.'/default.css?2" title="default" />
+	<link rel="stylesheet" type="text/css" media="screen" href="'.$site_url.'default.css?2" title="default" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	</head>
 	<body>

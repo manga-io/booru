@@ -17,7 +17,7 @@
 		}
 		else
 			$id = $db->real_escape_string($_GET['id']);
-		$query = "SELECT t1.user, t1.record_score, t1.post_count, t1.comment_count, t1.tag_edit_count, t1.forum_post_count, t1.signup_date, t2.group_name FROM $user_table as t1 JOIN $group_table AS t2 ON t2.id=t1.ugroup WHERE t1.id='$id'";
+		$query = "SELECT t1.user, t1.record_score, t1.post_count, t1.comment_count, t1.tag_edit_count, t1.forum_post_count, t1.signup_date, t2.group_name FROM `$user_table` as t1 JOIN `$group_table` AS t2 ON t2.id=t1.ugroup WHERE t1.id='$id'";
 		$result = $db->query($query) or die($db->error);
 		$row = $result->fetch_assoc();
 		if($result->num_rows == 0)

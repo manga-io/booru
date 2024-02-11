@@ -52,10 +52,10 @@
 				header('Location: index.php?page=account&s=home');
 				exit;
 			}
-			if(isset($_POST['post_anonymous']) || $_POST['post_anonymous'] == true)
+			if(isset($_POST['post_anonymous']) && $_POST['post_anonymous'] == true)
 			{
 				$user = "Anonymous";
-				$query = "SELECT id FROM $user_table WHERE user='$user' LIMIT 1";
+				$query = "SELECT id FROM `$user_table` WHERE user='$user' LIMIT 1";
 				$result = $db->query($query);
 				$row = $result->fetch_assoc();
 				$user_id = $row['id'];

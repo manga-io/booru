@@ -39,14 +39,14 @@
 				header("HTTP/1.1 404 Not Found");
 				exit;
 			}
-			$query = "INSERT INTO $forum_post_table(title, post, author, creation_date, topic_id) VALUES('$title', '$post', '$user', '".mktime()."', '$pid')";
+			$query = "INSERT INTO $forum_post_table(title, post, author, creation_date, topic_id) VALUES('$title', '$post', '$user', '".time()."', '$pid')";
 			$db->query($query) or die($db->error);
 			$query = "SELECT LAST_INSERT_ID() as id FROM $forum_post_table";
 			$result = $db->query($query) or die($db->error);
 			$row = $result->fetch_assoc();
 			$id = $row['id'];
 			$result->free_result();
-			$query = "UPDATE $forum_topic_table SET last_updated='".mktime()."' WHERE id='$pid'";
+			$query = "UPDATE $forum_topic_table SET last_updated='".time()."' WHERE id='$pid'";
 			$db->query($query) or die($db->error);
 			$db->query($add_forum_count);			
 			$query = "SELECT COUNT(*) FROM $forum_post_table WHERE topic_id='$pid'";
@@ -81,13 +81,13 @@
 				header("HTTP/1.1 404 Not Found");
 				exit;
 			}
-			$query = "INSERT INTO $forum_topic_table(topic, author, creation_post, last_updated) VALUES('$topic', '$user', '0', '".mktime()."')";
+			$query = "INSERT INTO $forum_topic_table(topic, author, creation_post, last_updated) VALUES('$topic', '$user', '0', '".time()."')";
 			$db->query($query) or die($db->error);
 			$query = "SELECT LAST_INSERT_ID() as id FROM $forum_topic_table";
 			$result = $db->query($query) or die($db->error);
 			$row = $result->fetch_assoc();
 			$pid = $row['id'];
-			$query = "INSERT INTO $forum_post_table(title, post, author, creation_date, topic_id) VALUES('$topic', '$post', '$user', '".mktime()."', '$pid')";
+			$query = "INSERT INTO $forum_post_table(title, post, author, creation_date, topic_id) VALUES('$topic', '$post', '$user', '".time()."', '$pid')";
 			$db->query($query) or die($db->error);
 			$db->query($add_forum_count);			
 			$query = "SELECT LAST_INSERT_ID() as id FROM $forum_post_table";

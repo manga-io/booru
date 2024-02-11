@@ -21,7 +21,7 @@
 				$db->query($query);
 				$query = "UPDATE $post_count_table SET pcount=pcount+1 WHERE access_key = 'comment_count'";
 				$db->query($query);
-				if($user != "Anonymous")
+				if($username != "Anonymous")
 				{
 					$query = "UPDATE $user_table SET comment_count = comment_count+1 WHERE id='$user_id'";
 					$db->query($query);

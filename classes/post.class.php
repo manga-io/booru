@@ -28,12 +28,13 @@
 			$query = "SELECT SQL_NO_CACHE id FROM $post_table WHERE id < $id ORDER BY id DESC LIMIT 1";
 			$result = $db->query($query);
 			$row = $result->fetch_assoc();
-			$prev_next[] = $row['id'];
+			if(isset($row['id'])) $prev_next[] = $row['id'];
 			$query = "SELECT SQL_NO_CACHE id FROM $post_table WHERE id > $id ORDER BY id DESC LIMIT 1";
 			$result = $db->query($query);
 			$row = $result->fetch_assoc();
-			$prev_next[] = $row['id'];
-			return $prev_next;
+			if(isset($row['id'])) $prev_next[] = $row['id'];
+			if (isset($prev_next)) return $prev_next;
+			return null;
 		}
 		
 		function has_children($id)
